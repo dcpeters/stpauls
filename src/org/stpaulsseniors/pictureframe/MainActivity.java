@@ -2,6 +2,8 @@ package org.stpaulsseniors.pictureframe;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,10 +16,29 @@ import android.widget.ImageView;
 
 public class MainActivity extends ActionBarActivity {
 
+	private static String[] imageNames;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setBackgroundPicture("l1.jpg");
 		
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				while(true) {
+					try {
+						wait(3000);
+					} catch (InterruptedException e) {
+					}
+					setBackgroundPicture("l2.jpg");
+				}
+				
+			}
+		});
+	}
+
+	public void setBackgroundPicture(String fileName) {
 		ImageView imageView = new ImageView(getApplicationContext());
 		LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		InputStream s;
@@ -30,8 +51,9 @@ public class MainActivity extends ActionBarActivity {
 		imageView.setImageBitmap(image);
 		imageView.setLayoutParams(lp);
 		setContentView(imageView);
+		
 	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
